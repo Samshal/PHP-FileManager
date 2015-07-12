@@ -108,7 +108,11 @@
 			$mode = self::$_supportedmodes[$_mode];
 			try
 			{
+<<<<<<< HEAD
+				$fh = fopen($_file, $mode) or throw new \Exception("File Access Error!");
+=======
 				$fh = fopen($_file, $mode) or die ("File Access Error!");
+>>>>>>> b8371f710d38208fff2922505084daca81005349
 				$mission = fwrite($fh, $_content);
 				if (!$mission)
 				{
