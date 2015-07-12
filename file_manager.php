@@ -44,15 +44,21 @@
 		}
 		private function __validateFileParam($needle, $haystack)
 		{
-			if (!is_array($haystack))
+			try
 			{
-				//an array object is expected, we need a method for handling exceptions probably (an external class that implements or inherits the base Exception methods from PHP)
-				//for now we notify the user and end program execution
+				if (!is_array($haystack))
+				{
+					//an array object is expected, we need a method for handling exceptions probably (an external class that implements or inherits the base Exception methods from PHP)
+					//for now we notify the user and end program execution
+					throw new \Exception("An Array Was Expected!");
 
-				die("An Array Was Expected!");
+				}
 
 			}
-
+			catch(Exception $e)
+			{
+				return $e;
+			}
 			if (is_string($needle))
 			{
 				$needle = strtolower($needle);
@@ -79,7 +85,7 @@
 			$mode = self::$_supportedmodes[$_mode];
 			try
 			{
-				$fh = fopen($_file, $mode) or die ("File Access Error!");
+				$fh = (fopen($_file, $mode)) ? fopen($_file, $mode) : throw new Exception("File Access Error!");
 				$mission = file_get_contents($_file);
 				if (!$mission)
 				{
@@ -108,11 +114,7 @@
 			$mode = self::$_supportedmodes[$_mode];
 			try
 			{
-<<<<<<< HEAD
-				$fh = fopen($_file, $mode) or throw new \Exception("File Access Error!");
-=======
-				$fh = fopen($_file, $mode) or die ("File Access Error!");
->>>>>>> b8371f710d38208fff2922505084daca81005349
+				$fh = (fopen($_file, $mode)) ? fopen($_file, $mode) : throw new Exception("File Access Error!");
 				$mission = fwrite($fh, $_content);
 				if (!$mission)
 				{
